@@ -27,16 +27,15 @@ class LinkedList(object):
             self.head = new_element
             
     def get_position(self, position):
-        if not self.head: return None
+        
+        if self.head is None: return
+    
         current = self.head
-        while position > 0 and current.next:
+        # while position is greater than 0, jump to the next node and drop position by one
+        while position - 1 > 0 and current is not None:
             current = current.next
             position -= 1
-        if position == 0:
-            return current
-        else:
-            print("Past end of list")
-            return None
+        return current
             
             
         
@@ -44,14 +43,30 @@ class LinkedList(object):
     def insert(self, new_element, position):
         # get the element the inserted element will link from
         prev = self.get_position(position - 1)
-        
-        pass
+        new_element.next = prev.next
+        prev.next = new_element
     
     
     def delete(self, value):
         """Delete the first node with a given value."""
-        pass
+        # in case the list is empty
+        if self.head is None:
+            return
+        
+        # if the head contains the value
+        if self.head.value == value:
+            self.head = self.head.next
+            return
 
+        current = self.head
+        # traverse the list until value is spotted in next
+        while current.next is not None:
+            # if we spot it in the next node delete that node
+            if current.next.value == value:
+                current.next = current.next.next
+                return
+        print("not found")
+    
 # Test cases
 # Set up some Elements
 e1 = Element(1)
